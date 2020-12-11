@@ -11,7 +11,7 @@ private[syntax] trait ApplySyntax {
     def <*>[B](ff: F[A => B])(implicit F: Apply[F]): F[B] =
       fa.ap(ff)
 
-    def *>[B](fa: F[A])(fb: F[B])(implicit F: Apply[F]): F[B] =
+    def *>[B](fb: F[B])(implicit F: Apply[F]): F[B] =
       F.productR(fa)(fb)
   }
 }
