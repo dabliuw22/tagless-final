@@ -2,14 +2,13 @@ package com.leysoft.interpreter
 
 import com.leysoft.algebra.Functor
 
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 
 object future {
 
-  implicit object FutureInstance extends Functor[Future] {
-
-    override def fmap[A, B](fa: Future[A])(f: A => B): Future[B] =
-      fa.map(f)
-  }
+  implicit def futureInstance(implicit ctx: ExecutionContext): Functor[Future] =
+    new Functor[Future] {
+      override def fmap[A, B](fa: Future[A])(f: A => B): Future[B] =
+        fa.map(f)(ctx)
+    }
 }
